@@ -2,6 +2,8 @@ package com.zxs.health.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.zxs.health.common.MessageConstant;
+import com.zxs.health.entity.PageResult;
+import com.zxs.health.entity.QueryPageBean;
 import com.zxs.health.entity.Result;
 import com.zxs.health.pojo.CheckItem;
 import com.zxs.health.service.CheckItemService;
@@ -51,6 +53,17 @@ public class CheckItemController {
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false,MessageConstant.ADD_CHECKGROUP_FAIL);
+        }
+    }
+
+    @RequestMapping("/findList")
+    public Result findList(@RequestBody QueryPageBean queryPageBean){
+        try {
+            PageResult pageResult=checkItemService.findList(queryPageBean);
+            return new Result(true,MessageConstant.QUERY_CHECKITEM_SUCCESS,pageResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.QUERY_CHECKITEM_FAIL);
         }
     }
 }

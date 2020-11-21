@@ -1,5 +1,7 @@
 package com.zxs.health.service;
 
+import com.zxs.health.entity.PageResult;
+import com.zxs.health.entity.QueryPageBean;
 import com.zxs.health.pojo.CheckItem;
 
 import java.util.List;
@@ -16,4 +18,6 @@ public interface CheckItemService {
 
     //添加
     void add(CheckItem checkItem);
+
+    PageResult findList(QueryPageBean queryPageBean);
 }

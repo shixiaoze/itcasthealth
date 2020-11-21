@@ -3,6 +3,12 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+    <!-- 配置pojo别名 -->
+    <typeAliases>
+        <!-- 扫描包的形式创建别名，别名就是类名，不区分大小写 -->
+        <package name="com.zxs.health.pojo"/>
+        <package name="com.zxs.health.entity"/>
+    </typeAliases>
     <plugins>
         <!-- com.github.pagehelper 为 PageHelper 类所在包名 -->
         <plugin interceptor="com.github.pagehelper.PageHelper">

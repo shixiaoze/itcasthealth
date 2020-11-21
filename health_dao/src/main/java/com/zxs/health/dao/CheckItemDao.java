@@ -1,5 +1,6 @@
 package com.zxs.health.dao;
 
+import com.zxs.health.entity.QueryPageBean;
 import com.zxs.health.pojo.CheckItem;
 
 import java.util.List;
@@ -22,4 +23,8 @@ public interface CheckItemDao {
      * @param checkItem
      */
     void add(CheckItem checkItem);
+
+    Long findTotal(QueryPageBean queryPageBean);
+
+    List<CheckItem> findList(QueryPageBean queryPageBean);
 }

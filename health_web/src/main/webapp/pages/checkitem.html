@@ -267,14 +267,28 @@
                 },
                 //分页查询
                 findPage() {
-                    //在这里提交异步请求，不分页
+                    /*//在这里提交异步请求，不分页
                     axios.get("/checkItem/findAll.do").then(res=>{
                         if (res.data.flag) {
                             this.dataList=res.data.data
                         }else{
                             this.$message({
                                 type:"error",
-                                message:response.data.message,
+                                message:res.data.message,
+                                showClose:true
+                            })
+                        }
+                    })*/
+
+                    //提交异步请求，分页查询
+                    axios.post("/checkItem/findList.do",this.pagination).then(res=>{
+                        if (res.data.flag) {
+                            this.pagination.total=res.data.data.total
+                            this.dataList=res.data.data.rows
+                        }else{
+                            this.$message({
+                                type:"error",
+                                message:res.data.message,
                                 showClose:true
                             })
                         }
@@ -292,6 +306,8 @@
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
+                    this.pagination.currentPage=currentPage;
+                    this.findPage()
                 },
                 // 删除
                 handleDelete(row) {
