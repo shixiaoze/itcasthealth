@@ -9,7 +9,6 @@ public class QueryPageBean implements Serializable{
     private Integer currentPage;//页码
     private Integer pageSize;//每页记录数
     private String queryString;//查询条件
-    private Long total;//总条数
     private Integer offset; // 分页查询，开始记录下标
 
     /**

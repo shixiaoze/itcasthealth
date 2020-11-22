@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.awt.geom.FlatteningPathIterator;
 import java.util.List;
 
 /**
@@ -31,13 +32,10 @@ public class CheckItemController {
      */
     @RequestMapping("/findAll")
     public Result findAll(){
-        try {
+
             List<CheckItem> checkItemList=checkItemService.findAll();
             return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS,checkItemList);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false, MessageConstant.QUERY_CHECKITEM_FAIL);
-        }
+
     }
 
     /**
@@ -47,23 +45,58 @@ public class CheckItemController {
      */
     @RequestMapping("/add")
     public Result add(@RequestBody CheckItem checkItem){
-        try {
+
             checkItemService.add(checkItem);
             return new Result(true,MessageConstant.ADD_CHECKITEM_SUCCESS);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false,MessageConstant.ADD_CHECKGROUP_FAIL);
-        }
+
     }
 
+    /**
+     * 分页查询所有
+     * @param queryPageBean
+     * @return
+     */
     @RequestMapping("/findList")
     public Result findList(@RequestBody QueryPageBean queryPageBean){
-        try {
+
             PageResult pageResult=checkItemService.findList(queryPageBean);
             return new Result(true,MessageConstant.QUERY_CHECKITEM_SUCCESS,pageResult);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false,MessageConstant.QUERY_CHECKITEM_FAIL);
-        }
+
+    }
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    @RequestMapping("/delete")
+    public Result deleteById(int id){
+            checkItemService.deleteById(id);
+            return new Result(true ,MessageConstant.DELETE_CHECKITEM_SUCCESS);
+    }
+
+
+    /**
+     * 根据id查询要回显的数据
+     * @param id
+     * @return
+     */
+    @RequestMapping("/findById")
+    public Result findById(int id){
+        CheckItem checkItem=checkItemService.findById(id);
+        return new Result(true,MessageConstant.QUERY_CHECKITEM_SUCCESS,checkItem);
+    }
+
+
+    /**
+     * 修改
+     * @param checkItem
+     * @return
+     */
+    @RequestMapping("/update")
+    public Result updateById(@RequestBody CheckItem checkItem){
+            checkItemService.updateById(checkItem);
+            return new Result(true,MessageConstant.EDIT_CHECKITEM_SUCCESS);
+
     }
 }
