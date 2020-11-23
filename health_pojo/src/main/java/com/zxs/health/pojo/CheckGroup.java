@@ -80,3 +80,4 @@ public class CheckGroup implements Serializable {
         this.attention = attention;
     }
 }
+
