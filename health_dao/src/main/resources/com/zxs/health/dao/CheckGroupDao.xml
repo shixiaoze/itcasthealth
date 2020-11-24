@@ -68,6 +68,12 @@
         delete from t_checkgroup where id=#{id}
     </delete>
 
+
+    <!--查询所有-->
+    <select id="findAll" resultType="checkGroup">
+        select * from t_checkgroup;
+    </select>
+
 </mapper>
 
 

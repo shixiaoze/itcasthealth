@@ -72,4 +72,11 @@ public interface CheckGroupDao {
      * @param id
      */
     void delete(int id);
+
+    /**
+     * 查询所有
+     * @return
+     */
+    List<CheckGroup> findAll();
+
 }

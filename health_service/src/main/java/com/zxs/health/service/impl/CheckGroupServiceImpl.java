@@ -119,6 +119,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
      * @throws MyException
      */
     @Override
+    @Transactional
     public void delete(int id) {
         //查询是否有关联的外键
         Long count=checkGroupDao.findCountByCheckGroupId(id);
@@ -135,5 +136,14 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         //最后删除检查组
         checkGroupDao.delete(id);
 
+    }
+
+    /**
+     * 查询所有
+     * @return
+     */
+    @Override
+    public List<CheckGroup> findAll() {
+        return checkGroupDao.findAll();
     }
 }

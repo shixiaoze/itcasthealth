@@ -56,4 +56,10 @@ public interface CheckGroupService {
      * @throws MyException
      */
     void delete(int id)throws MyException;
+
+    /**
+     * 查询所有
+     * @return
+     */
+    List<CheckGroup> findAll();
 }
