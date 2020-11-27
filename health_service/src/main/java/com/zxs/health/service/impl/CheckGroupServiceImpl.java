@@ -31,6 +31,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 
     /**
      * 分页查询
+     *
      * @param queryPageBean
      * @return
      */
@@ -41,18 +42,18 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         //非空判断，是否有搜索条件
         if (!StringUtils.isEmpty(queryPageBean.getQueryString())) {
             //有搜索条件,模糊匹配
-            queryPageBean.setQueryString("%"+queryPageBean.getQueryString()+"%");
+            queryPageBean.setQueryString("%" + queryPageBean.getQueryString() + "%");
         }
-        Page<CheckGroup> checkGroupPage=checkGroupDao.findPage(queryPageBean.getQueryString());
+        Page<CheckGroup> checkGroupPage = checkGroupDao.findPage(queryPageBean.getQueryString());
 
-        return new PageResult(checkGroupPage.getTotal(),checkGroupPage.getResult());
+        return new PageResult(checkGroupPage.getTotal(), checkGroupPage.getResult());
     }
 
     /**
      * 新增检查组
+     *
      * @param checkGroup
-     * @param checkitemIds
-     * 操作两张表要加事物
+     * @param checkitemIds 操作两张表要加事物
      */
     @Override
     @Transactional
@@ -61,10 +62,10 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         //获取添加后自增长的id
         Integer id = checkGroup.getId();
 
-        if (checkitemIds !=null) {
+        if (checkitemIds != null) {
             //检查项有勾选
             for (Integer checkitemId : checkitemIds) {
-                checkGroupDao.addCheckGroupCheckItem(id,checkitemId);
+                checkGroupDao.addCheckGroupCheckItem(id, checkitemId);
             }
         }
     }
@@ -72,6 +73,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 
     /**
      * 根据id查询检查组
+     *
      * @param id
      * @return
      */
@@ -82,6 +84,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 
     /**
      * 根据id查询检查项钩中的id集合
+     *
      * @param id
      * @return
      */
@@ -92,6 +95,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 
     /**
      * 编辑检查组
+     *
      * @param checkGroup
      * @param checkitemIds
      */
@@ -108,13 +112,14 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         //重新根据id添加关联表的关系
         if (checkitemIds != null) {
             for (Integer checkitemId : checkitemIds) {
-                checkGroupDao.addCheckGroupCheckItem(id,checkitemId);
+                checkGroupDao.addCheckGroupCheckItem(id, checkitemId);
             }
         }
     }
 
     /**
      * 根据id删除检查组
+     *
      * @param id
      * @throws MyException
      */
@@ -122,11 +127,11 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     @Transactional
     public void delete(int id) {
         //查询是否有关联的外键
-        Long count=checkGroupDao.findCountByCheckGroupId(id);
+        Long count = checkGroupDao.findCountByCheckGroupId(id);
 
         //表示有关联
-        if (count!=null) {
-            if (count>1) {
+        if (count != null) {
+            if (count > 1) {
                 throw new MyException("该检查组被套餐使用，不能删除！");
             }
         }
@@ -140,6 +145,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 
     /**
      * 查询所有
+     *
      * @return
      */
     @Override

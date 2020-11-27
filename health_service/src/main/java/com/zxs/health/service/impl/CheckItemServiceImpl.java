@@ -26,16 +26,18 @@ public class CheckItemServiceImpl implements CheckItemService {
 
     /**
      * 查询所有
+     *
      * @return
      */
     @Override
     public List<CheckItem> findAll() {
-        List<CheckItem> checkItemList=checkItemDao.findAll();
+        List<CheckItem> checkItemList = checkItemDao.findAll();
         return checkItemList;
     }
 
     /**
      * 添加
+     *
      * @param checkItem
      */
     @Override
@@ -45,35 +47,38 @@ public class CheckItemServiceImpl implements CheckItemService {
 
     /**
      * 分页查询
+     *
      * @param queryPageBean
      * @return
      */
     @Override
     public PageResult findList(QueryPageBean queryPageBean) {
-        Long total=checkItemDao.findTotal(queryPageBean);
-        List<CheckItem> rows=checkItemDao.findList(queryPageBean);
+        Long total = checkItemDao.findTotal(queryPageBean);
+        List<CheckItem> rows = checkItemDao.findList(queryPageBean);
 
-        return new PageResult(total,rows);
+        return new PageResult(total, rows);
     }
 
     /**
      * 根据id删除
+     *
      * @param id
      */
     @Override
     public void deleteById(int id) {
         //查询有关联个数
-        int count=checkItemDao.findCountById(id);
+        int count = checkItemDao.findCountById(id);
         //判断是否有关联
-        if (count>0) {
+        if (count > 0) {
             //有关联抛异常
-           throw new MyException("有关联的检查组，不能删除！");
+            throw new MyException("有关联的检查组，不能删除！");
         }
         checkItemDao.deleteById(id);
     }
 
     /**
      * 根据id修改
+     *
      * @param checkItem
      */
     @Override
@@ -83,6 +88,7 @@ public class CheckItemServiceImpl implements CheckItemService {
 
     /**
      * 根据id查询要回显的数据
+     *
      * @param id
      * @return
      */

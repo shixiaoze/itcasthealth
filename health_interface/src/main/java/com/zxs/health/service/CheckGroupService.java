@@ -16,6 +16,7 @@ import java.util.List;
 public interface CheckGroupService {
     /**
      * 分页查询
+     *
      * @param queryPageBean
      * @return
      */
@@ -23,6 +24,7 @@ public interface CheckGroupService {
 
     /**
      * 新增检查组
+     *
      * @param checkGroup
      * @param checkitemIds
      */
@@ -31,6 +33,7 @@ public interface CheckGroupService {
 
     /**
      * 根据id查询检查组
+     *
      * @param id
      * @return
      */
@@ -38,6 +41,7 @@ public interface CheckGroupService {
 
     /**
      * 根据id查询检查项钩中的id集合
+     *
      * @param id
      * @return
      */
@@ -45,6 +49,7 @@ public interface CheckGroupService {
 
     /**
      * 编辑检查组
+     *
      * @param checkGroup
      * @param checkitemIds
      */
@@ -52,13 +57,15 @@ public interface CheckGroupService {
 
     /**
      * 根据id删除检查组
+     *
      * @param id
      * @throws MyException
      */
-    void delete(int id)throws MyException;
+    void delete(int id) throws MyException;
 
     /**
      * 查询所有
+     *
      * @return
      */
     List<CheckGroup> findAll();

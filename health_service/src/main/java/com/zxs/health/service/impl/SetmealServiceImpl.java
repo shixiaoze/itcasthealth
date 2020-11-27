@@ -30,30 +30,31 @@ public class SetmealServiceImpl implements SetmealService {
 
     /**
      * 分页查询
+     *
      * @param queryPageBean
      * @return
      */
     @Override
     public PageResult findPage(QueryPageBean queryPageBean) {
         //使用插件分页查询
-        PageHelper.startPage(queryPageBean.getCurrentPage(),queryPageBean.getPageSize());
+        PageHelper.startPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize());
 
         //如果有搜索条件
         if (!StringUtil.isEmpty(queryPageBean.getQueryString())) {
             //字符串模糊拼接
-            queryPageBean.setQueryString("%"+queryPageBean.getQueryString()+"%");
+            queryPageBean.setQueryString("%" + queryPageBean.getQueryString() + "%");
         }
-        Page<Setmeal> setmealPage =setmealDao.findPage(queryPageBean.getQueryString());
+        Page<Setmeal> setmealPage = setmealDao.findPage(queryPageBean.getQueryString());
         //将查到的total和每页集合封装
-        return new PageResult(setmealPage.getTotal(),setmealPage.getResult());
+        return new PageResult(setmealPage.getTotal(), setmealPage.getResult());
     }
 
 
     /**
      * 新建
+     *
      * @param setmeal
-     * @param checkgroupIds
-     * 操作多张表一定要加事物控制
+     * @param checkgroupIds 操作多张表一定要加事物控制
      */
     @Override
     @Transactional
@@ -63,10 +64,10 @@ public class SetmealServiceImpl implements SetmealService {
         //获取自增长的id
         Integer setmealId = setmeal.getId();
         //遍历检查组的id
-        if (checkgroupIds!=null) {
+        if (checkgroupIds != null) {
             for (Integer checkgroupId : checkgroupIds) {
                 //添加套餐与检查组的关系
-                setmealDao.addSetmealCheckGroup(setmealId,checkgroupId);
+                setmealDao.addSetmealCheckGroup(setmealId, checkgroupId);
             }
         }
 
@@ -74,6 +75,7 @@ public class SetmealServiceImpl implements SetmealService {
 
     /**
      * 根据id查询
+     *
      * @param id
      * @return
      */
@@ -84,6 +86,7 @@ public class SetmealServiceImpl implements SetmealService {
 
     /**
      * 根据套餐id查询检查组id
+     *
      * @param id
      * @return
      */
@@ -94,6 +97,7 @@ public class SetmealServiceImpl implements SetmealService {
 
     /**
      * 更新套餐
+     *
      * @param setmeal
      * @param checkgroupIds
      */
@@ -105,9 +109,9 @@ public class SetmealServiceImpl implements SetmealService {
         //根据套餐id删除旧关系
         setmealDao.deleteById(setmeal.getId());
         //添加新关系
-        if (checkgroupIds!=null) {
+        if (checkgroupIds != null) {
             for (Integer checkgroupId : checkgroupIds) {
-                setmealDao.addSetmealCheckGroup(setmeal.getId(),checkgroupId);
+                setmealDao.addSetmealCheckGroup(setmeal.getId(), checkgroupId);
             }
         }
     }
@@ -116,9 +120,9 @@ public class SetmealServiceImpl implements SetmealService {
     @Transactional
     public void delete(int id) {
         //根据id去查询有没有被订单表关联
-        int count=setmealDao.findOrderCountBySetmealId(id);
+        int count = setmealDao.findOrderCountBySetmealId(id);
 
-        if (count>0) {
+        if (count > 0) {
             //有关联，不能删除
             throw new MyException("已有客户对该套餐下单，不能删除！");
         }
@@ -126,5 +130,14 @@ public class SetmealServiceImpl implements SetmealService {
         setmealDao.deleteById(id);
         //可以删除
         setmealDao.delete(id);
+    }
+
+    /**
+     * 查询套餐表的所有图片
+     * @return
+     */
+    @Override
+    public List<String> findImgs() {
+        return setmealDao.findImgs();
     }
 }

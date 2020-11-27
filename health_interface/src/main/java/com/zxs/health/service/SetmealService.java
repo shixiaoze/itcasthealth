@@ -17,6 +17,7 @@ import java.util.List;
 public interface SetmealService {
     /**
      * 分页查询
+     *
      * @param queryPageBean
      * @return
      */
@@ -24,6 +25,7 @@ public interface SetmealService {
 
     /**
      * 新建
+     *
      * @param setmeal
      * @param checkgroupIds
      */
@@ -31,6 +33,7 @@ public interface SetmealService {
 
     /**
      * 根据id查询
+     *
      * @param id
      * @return
      */
@@ -38,6 +41,7 @@ public interface SetmealService {
 
     /**
      * 根据套餐id查询检查组id
+     *
      * @param id
      * @return
      */
@@ -46,15 +50,22 @@ public interface SetmealService {
 
     /**
      * 更新套餐
+     *
      * @param setmeal
      * @param checkgroupIds
      */
     void update(Setmeal setmeal, Integer[] checkgroupIds);
 
     /**
-     *
      * 删除
+     *
      * @param id
      */
     void delete(int id) throws MyException;
+
+    /**
+     * 查询套餐表的所有图片
+     * @return
+     */
+    List<String> findImgs();
 }

@@ -39,102 +39,109 @@ public class SetmealController {
 
     /**
      * 图片上传
+     *
      * @param imgFile
      * @return
      */
     @RequestMapping("/upload")
-    public Result upload(MultipartFile imgFile){
+    public Result upload(MultipartFile imgFile) {
         //获取上传的文件名
         String originalFilename = imgFile.getOriginalFilename();
         //截取后缀名
         String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
         //生成唯一文件名，拼接后缀名，生成图片名
-        String imgName=UUID.randomUUID().toString()+ suffix;
+        String imgName = UUID.randomUUID().toString() + suffix;
         try {
             //调用七牛工具类进行文件上传
-            QiNiuUtils.uploadViaByte(imgFile.getBytes(),imgName);
+            QiNiuUtils.uploadViaByte(imgFile.getBytes(), imgName);
             //成功后返回域名与图片名
-            Map<String,String> resultMap= new HashMap<String,String>();
-            resultMap.put("imgName",imgName);
-            resultMap.put("domain",QiNiuUtils.DOMAIN);
-            return new Result(true,MessageConstant.PIC_UPLOAD_SUCCESS,resultMap);
+            Map<String, String> resultMap = new HashMap<String, String>();
+            resultMap.put("imgName", imgName);
+            resultMap.put("domain", QiNiuUtils.DOMAIN);
+            return new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS, resultMap);
         } catch (IOException e) {
             e.printStackTrace();
-            log.error("上传文件失败",e);
+            log.error("上传文件失败", e);
             return new Result(false, MessageConstant.PIC_UPLOAD_FAIL);
         }
     }
 
     /**
      * 分页查询
+     *
      * @param queryPageBean
      * @return
      */
     @RequestMapping("/findPage")
-    public Result findPage(@RequestBody QueryPageBean queryPageBean){
-        PageResult pageResult=setmealService.findPage(queryPageBean);
-        return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS,pageResult);
+    public Result findPage(@RequestBody QueryPageBean queryPageBean) {
+        PageResult pageResult = setmealService.findPage(queryPageBean);
+        return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS, pageResult);
     }
 
     /**
      * 新建
+     *
      * @param setmeal
      * @param checkgroupIds
      * @return
      */
     @RequestMapping("/add")
-    public Result add(@RequestBody Setmeal setmeal,Integer[]checkgroupIds){
-        setmealService.add(setmeal,checkgroupIds);
-        return new Result(true,MessageConstant.ADD_SETMEAL_SUCCESS);
+    public Result add(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
+        setmealService.add(setmeal, checkgroupIds);
+        return new Result(true, MessageConstant.ADD_SETMEAL_SUCCESS);
     }
 
     /**
      * 根据id查询
+     *
      * @param id
      * @return
      */
     @RequestMapping("/findById")
-    public Result findById(int id ){
-        Setmeal setmeal=setmealService.findById(id);
+    public Result findById(int id) {
+        Setmeal setmeal = setmealService.findById(id);
         Map resultMap = new HashMap<>();
-        resultMap.put("setmeal",setmeal);
-        resultMap.put("domain",QiNiuUtils.DOMAIN);
-        return new Result(true,MessageConstant.QUERY_SETMEAL_SUCCESS,resultMap);
+        resultMap.put("setmeal", setmeal);
+        resultMap.put("domain", QiNiuUtils.DOMAIN);
+        return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS, resultMap);
     }
 
 
     /**
      * 根据套餐id查询检查组id
+     *
      * @param id
      * @return
      */
     @RequestMapping("/findCheckGroupIdsBySetmealId")
-    public Result findCheckGroupIdsBySetmealId(int id){
-        List<Integer> checkgroupIds =setmealService.findCheckGroupIdsBySetmealId(id);
-        return new Result(true,"查询id集合成功",checkgroupIds);
+    public Result findCheckGroupIdsBySetmealId(int id) {
+        List<Integer> checkgroupIds = setmealService.findCheckGroupIdsBySetmealId(id);
+        return new Result(true, "查询id集合成功", checkgroupIds);
     }
 
     /**
      * 更新套餐
+     *
      * @param setmeal
      * @param checkgroupIds
      * @return
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody Setmeal setmeal,Integer[]checkgroupIds){
-        setmealService.update(setmeal,checkgroupIds);
-        return new Result(true,"更新套餐成功");
+    public Result update(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
+        setmealService.update(setmeal, checkgroupIds);
+        return new Result(true, "更新套餐成功");
     }
 
     /**
      * 删除
+     *
      * @param id
      * @return
      */
     @RequestMapping("/delete")
-    public Result delete(int id){
+    public Result delete(int id) {
         setmealService.delete(id);
-        return new Result(true,"删除成功");
+        return new Result(true, "删除成功");
     }
 
 }

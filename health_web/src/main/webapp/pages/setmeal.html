@@ -523,7 +523,7 @@
                         if (res.data.flag) {
                             this.tableData=res.data.data
                         }else{
-                            this.$message({type:"error", message:response.data.message, showClose:true})
+                            this.$message({type:"error", message:res.data.message, showClose:true})
                         }
                     })
                 },

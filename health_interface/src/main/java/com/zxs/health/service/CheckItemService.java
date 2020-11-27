@@ -16,18 +16,21 @@ import java.util.List;
 public interface CheckItemService {
     /**
      * 查询所有
+     *
      * @return
      */
     List<CheckItem> findAll();
 
     /**
      * 添加
+     *
      * @param checkItem
      */
     void add(CheckItem checkItem);
 
     /**
-     *  分页查询
+     * 分页查询
+     *
      * @param queryPageBean
      * @return
      */
@@ -35,18 +38,21 @@ public interface CheckItemService {
 
     /**
      * 根据id删除
+     *
      * @param id
      */
-    void deleteById (int id) throws MyException;
+    void deleteById(int id) throws MyException;
 
     /**
      * 根据id修改
+     *
      * @param checkItem
      */
     void updateById(CheckItem checkItem);
 
     /**
      * 根据id查询回显数据
+     *
      * @param id
      * @return
      */

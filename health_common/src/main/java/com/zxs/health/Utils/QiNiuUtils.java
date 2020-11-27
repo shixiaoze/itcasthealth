@@ -9,6 +9,7 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.BatchStatus;
 import com.qiniu.storage.model.DefaultPutRet;
+import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
 import com.zxs.health.common.MessageConstant;
 
@@ -29,7 +30,28 @@ public class QiNiuUtils {
 
     public static void main(String[] args) {
         //uploadFile("C:\\Users\\Eric\\Desktop\\file\\timg2.jpg","dlrb.jpg");
-        removeFiles("dlrb.jpg","timg.jpg");
+        //removeFiles("dlrb.jpg","timg.jpg");
+    }
+
+    /**
+     * 遍历7牛上的所有图片
+     * @return
+     */
+    public static List<String> listFile(){
+        BucketManager bucketManager = getBucketManager();
+        //列举空间文件列表, 第一个参数：图片的仓库（空间名）,第二个参数，文件名前缀过滤。“”代理所有
+        BucketManager.FileListIterator fileListIterator = bucketManager.createFileListIterator(BUCKET,"");
+        List<String> imageFiles = new ArrayList<String>();
+        while (fileListIterator.hasNext()) {
+            //处理获取的file list结果
+            FileInfo[] items = fileListIterator.next();
+            for (FileInfo item : items) {
+                // item.key 文件名
+                imageFiles.add(item.key);
+                //System.out.println(item.key);
+            }
+        }
+        return imageFiles;
     }
 
     /**

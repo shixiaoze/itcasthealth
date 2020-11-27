@@ -28,75 +28,81 @@ public class CheckItemController {
 
     /**
      * 查询所有
+     *
      * @return
      */
     @RequestMapping("/findAll")
-    public Result findAll(){
+    public Result findAll() {
 
-            List<CheckItem> checkItemList=checkItemService.findAll();
-            return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS,checkItemList);
+        List<CheckItem> checkItemList = checkItemService.findAll();
+        return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, checkItemList);
 
     }
 
     /**
      * 添加方法
+     *
      * @param checkItem
      * @return
      */
     @RequestMapping("/add")
-    public Result add(@RequestBody CheckItem checkItem){
+    public Result add(@RequestBody CheckItem checkItem) {
 
-            checkItemService.add(checkItem);
-            return new Result(true,MessageConstant.ADD_CHECKITEM_SUCCESS);
+        checkItemService.add(checkItem);
+        return new Result(true, MessageConstant.ADD_CHECKITEM_SUCCESS);
 
     }
 
     /**
      * 分页查询所有
+     *
      * @param queryPageBean
      * @return
      */
     @RequestMapping("/findList")
-    public Result findList(@RequestBody QueryPageBean queryPageBean){
+    public Result findList(@RequestBody QueryPageBean queryPageBean) {
 
-            PageResult pageResult=checkItemService.findList(queryPageBean);
-            return new Result(true,MessageConstant.QUERY_CHECKITEM_SUCCESS,pageResult);
+        PageResult pageResult = checkItemService.findList(queryPageBean);
+        return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, pageResult);
 
     }
 
     /**
      * 删除
+     *
      * @param id
      * @return
      */
     @RequestMapping("/delete")
-    public Result deleteById(int id){
-            checkItemService.deleteById(id);
-            return new Result(true ,MessageConstant.DELETE_CHECKITEM_SUCCESS);
+    public Result deleteById(int id) {
+        checkItemService.deleteById(id);
+        return new Result(true, MessageConstant.DELETE_CHECKITEM_SUCCESS);
     }
 
 
     /**
      * 根据id查询要回显的数据
+     *
      * @param id
      * @return
      */
     @RequestMapping("/findById")
-    public Result findById(int id){
-        CheckItem checkItem=checkItemService.findById(id);
-        return new Result(true,MessageConstant.QUERY_CHECKITEM_SUCCESS,checkItem);
+    public Result findById(int id) {
+        CheckItem checkItem = checkItemService.findById(id);
+        return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, checkItem);
     }
 
 
     /**
      * 修改
+     *
      * @param checkItem
      * @return
      */
     @RequestMapping("/update")
-    public Result updateById(@RequestBody CheckItem checkItem){
-            checkItemService.updateById(checkItem);
-            return new Result(true,MessageConstant.EDIT_CHECKITEM_SUCCESS);
+    public Result updateById(@RequestBody CheckItem checkItem) {
+        checkItemService.updateById(checkItem);
+        return new Result(true, MessageConstant.EDIT_CHECKITEM_SUCCESS);
 
     }
 }
