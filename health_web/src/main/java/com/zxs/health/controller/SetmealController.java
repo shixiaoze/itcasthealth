@@ -11,10 +11,13 @@ import com.zxs.health.service.SetmealService;
 import org.omg.CORBA.Object;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -34,6 +37,8 @@ public class SetmealController {
 
     @Reference
     private SetmealService setmealService;
+    @Autowired
+    private JedisPool jedisPool;
 
     private static final Logger log = LoggerFactory.getLogger(SetmealController.class);
 
@@ -87,7 +92,13 @@ public class SetmealController {
      */
     @RequestMapping("/add")
     public Result add(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
-        setmealService.add(setmeal, checkgroupIds);
+        Integer setmealId=setmealService.add(setmeal, checkgroupIds);
+        //生成静态页面
+        Jedis jedis = jedisPool.getResource();
+        String key="setmeal:static:html";
+        //存入redis中的格式
+        jedis.sadd(key,setmealId+"|1|"+System.currentTimeMillis());
+        jedis.close();
         return new Result(true, MessageConstant.ADD_SETMEAL_SUCCESS);
     }
 
@@ -129,6 +140,12 @@ public class SetmealController {
     @RequestMapping("/update")
     public Result update(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
         setmealService.update(setmeal, checkgroupIds);
+        //生成静态页面
+        Jedis jedis = jedisPool.getResource();
+        String key="setmeal:static:html";
+        //存入redis中的格式
+        jedis.sadd(key,setmeal.getId()+"|1|"+System.currentTimeMillis());
+        jedis.close();
         return new Result(true, "更新套餐成功");
     }
 
@@ -141,6 +158,12 @@ public class SetmealController {
     @RequestMapping("/delete")
     public Result delete(int id) {
         setmealService.delete(id);
+        //生成静态页面
+        Jedis jedis = jedisPool.getResource();
+        String key="setmeal:static:html";
+        //存入redis中的格式
+        jedis.sadd(key,id+"|0|"+System.currentTimeMillis());
+        jedis.close();
         return new Result(true, "删除成功");
     }
 

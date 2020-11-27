@@ -70,4 +70,41 @@
         select img from t_setmeal
     </select>
 
+    <!--获取套餐信息列表-->
+    <select id="getSetmeal" resultType="setmeal">
+        select * from t_setmeal;
+    </select>
+
+    <!--根据id查询套餐下的所有检查组检查项-->
+    <select id="findDetailById" parameterType="int" resultMap="setmealMap">
+          select
+            tsm.id,tsm.name,tsm.sex,tsm.age,tsm.img,tsm.remark,
+            tcg.id checkgroup_id,tcg.name checkgroup_name,tcg.remark checkgroup_remark,
+            tci.id checkitem_id,tci.name checkitem_name
+          from
+            t_setmeal tsm left join t_setmeal_checkgroup tsc on tsc.setmeal_id=tsm.id
+            left join t_checkgroup tcg on tcg.id=tsc.checkgroup_id
+            left join t_checkgroup_checkitem tcc on tcc.checkgroup_id=tcg.id
+            left join t_checkitem tci on tci.id=tcc.checkitem_id
+          where tsm.id=#{id}
+    </select>
+
+    <resultMap id="setmealMap" type="setmeal">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="sex" column="sex"></result>
+        <result property="age" column="age"></result>
+        <result property="img" column="img"></result>
+        <result property="remark" column="remark"></result>
+        <collection property="checkGroups" ofType="checkGroup">
+            <id property="id" column="checkgroup_id"></id>
+            <result property="name" column="checkgroup_name"></result>
+            <result property="remark" column="checkgroup_remark"></result>
+            <collection property="checkItems" ofType="checkItem">
+                <id property="id" column="checkitem_id"></id>
+                <result property="name" column="checkitem_name"></result>
+            </collection>
+        </collection>
+    </resultMap>
 </mapper>
+
