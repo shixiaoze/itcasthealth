@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxs.health.dao.OrderDao">
+    <!--订单表集合-->
+    <select id="findByOrder" parameterType="order" resultType="order">
+        select * from t_order where member_id=#{memberId} and orderDate=#{orderDate} and setmeal_id=#{setmealId}
+    </select>
+
+    <!--添加订单信息-->
+    <insert id="add" parameterType="order" keyProperty="id" useGeneratedKeys="true">
+        insert into t_order (member_Id,orderDate,orderType,orderStatus,setmeal_Id) values (#{memberId},#{orderDate},#{orderType},#{orderStatus},#{setmealId})
+    </insert>
+
+    <!--根据id查询套餐信息-->
+    <select id="findById" parameterType="int" resultType="map">
+        select
+            tm.name member,ts.name setmeal,DATE_FORMAT(tor.orderDate,'%Y-%m-%d') orderDate,tor.orderType orderType
+          from
+            t_order tor,t_member tm,t_setmeal ts
+          where
+            tor.member_id=tm.id and tor.setmeal_id=ts.id and tor.id=#{id}
+    </select>
+</mapper>

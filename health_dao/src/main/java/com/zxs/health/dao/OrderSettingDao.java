@@ -13,6 +13,8 @@ import java.util.Map;
  * 日期: 2020/11/26 8:30
  */
 public interface OrderSettingDao {
+
+
     /**
      * 根据日期查询订单表
      * @param orderDate
@@ -38,4 +40,11 @@ public interface OrderSettingDao {
      * @return
      */
     List<Map<String, Integer>> findAll(String month);
+
+    /**
+     * 更新预约表
+     * @param orderSetting
+     * @return
+     */
+    int editReservationsByOrderDate(OrderSetting orderSetting);
 }
