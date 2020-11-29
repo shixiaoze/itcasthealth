@@ -52,7 +52,7 @@ public class LoginController {
         String telephone = map.get("telephone");
         //拼接成jedis格式的key
         Jedis jedis = jedisPool.getResource();
-        String key= RedisMessageConstant.SENDTYPE_ORDER+":"+telephone;
+        String key= RedisMessageConstant.SENDTYPE_LOGIN+":"+telephone;
         //根据key获取redis存储的验证码
         String codeInRedis = jedis.get(key);
         log.debug("redis中的验证码：{}",codeInRedis);

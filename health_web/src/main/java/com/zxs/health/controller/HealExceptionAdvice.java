@@ -4,6 +4,7 @@ import com.zxs.health.entity.Result;
 import com.zxs.health.exception.MyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -34,6 +35,17 @@ public class HealExceptionAdvice {
     public Result handleHealthException(MyException e) {
         // 我们自己抛出的异常，把异常信息包装下返回即可
         return new Result(false, e.getMessage());
+    }
+
+    /**
+     * 拦截权限异常捕获
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public Result AccessDeniedException(AccessDeniedException e) {
+        // 我们自己抛出的异常，把异常信息包装下返回即可
+        return new Result(false, "您没有权限操作，请联系管理员");
     }
 
     /**

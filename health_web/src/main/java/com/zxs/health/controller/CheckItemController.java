@@ -7,6 +7,7 @@ import com.zxs.health.entity.QueryPageBean;
 import com.zxs.health.entity.Result;
 import com.zxs.health.pojo.CheckItem;
 import com.zxs.health.service.CheckItemService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,6 +47,7 @@ public class CheckItemController {
      * @return
      */
     @RequestMapping("/add")
+    @PreAuthorize("hasAuthority('CHECKITEM_ADD')")
     public Result add(@RequestBody CheckItem checkItem) {
 
         checkItemService.add(checkItem);

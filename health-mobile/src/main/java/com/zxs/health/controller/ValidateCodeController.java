@@ -77,7 +77,7 @@ public class ValidateCodeController {
     public Result send4Login(String telephone){
         Jedis jedis = jedisPool.getResource();
         //拼接jedis的key,key要带上业务标示
-        String key= RedisMessageConstant.SENDTYPE_ORDER+":"+telephone;
+        String key= RedisMessageConstant.SENDTYPE_LOGIN+":"+telephone;
         //根据这个电话标示的key去jedis获取值
         String codeInRedis = jedis.get(key);
         log.debug("Redis中的验证码: {},{}",codeInRedis,telephone);

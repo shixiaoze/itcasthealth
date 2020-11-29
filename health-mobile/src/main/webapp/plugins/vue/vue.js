@@ -10692,7 +10692,7 @@ function createCompileToFunctionFn (compile) {
         if (e.toString().match(/unsafe-eval|CSP/)) {
           warn$$1(
             'It seems you are using the standalone build of Vue.js in an ' +
-            'environment with Content Security Policy that prohibits unsafe-eval. ' +
+            'environment with Content security Policy that prohibits unsafe-eval. ' +
             'The template compiler cannot work in this environment. Consider ' +
             'relaxing the policy to allow unsafe-eval or pre-compiling your ' +
             'templates into render functions.'
